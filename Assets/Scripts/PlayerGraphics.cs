@@ -14,7 +14,10 @@ public class PlayerGraphics : MonoBehaviour
 
     void LateUpdate()
     {
-        transform.position = _parentSphereCollider.transform.position + Vector3.down * _parentSphereCollider.radius;
-        transform.rotation = Quaternion.LookRotation(new Vector3(_parentRigidbody.linearVelocity.x,0,_parentRigidbody.linearVelocity.z));
+        if (_parentRigidbody.linearVelocity.magnitude > 0.1)
+        {
+            transform.rotation = Quaternion.LookRotation(new Vector3(_parentRigidbody.linearVelocity.x, 0,
+                _parentRigidbody.linearVelocity.z));
+        }
     }
 }
