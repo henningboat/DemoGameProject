@@ -10,7 +10,7 @@ public class Player : Singleton<Player>
     Rigidbody _rigidbody;
     Renderer _renderer;
 
-    float _stunTime;
+    float _stunTime = 0;
 
     void Start()
     {
@@ -25,6 +25,11 @@ public class Player : Singleton<Player>
         if (_stunTime <= 0)
         {
             var keyboardInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            var cameraTransform = CameraController.Instance.transform;
+            
+            //rotate keyboard input by the Camera's rotation around the up axis
+            keyboardInput = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0) * keyboardInput;
+            
             if (keyboardInput.magnitude > 0.01f)
             {
                 transform.LookAt(transform.position + keyboardInput);

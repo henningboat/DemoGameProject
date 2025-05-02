@@ -4,13 +4,15 @@ using UnityEngine.Serialization;
 
 public class CameraController : Singleton<CameraController>
 {
-   [FormerlySerializedAs("positionOffset")] public Vector3 cameraOffset;
-   [FormerlySerializedAs("lerpSpeed")] public float speed;
+   public Vector3 cameraOffset;
+    public float speed;
    
    private void Update()
    {
-      transform.position = Vector3.Lerp(transform.position, Player.Instance.transform.position + cameraOffset,
+      var targetPosition = Player.Instance.transform.position + cameraOffset;
+      transform.position = Vector3.Lerp(transform.position, targetPosition,
          Time.deltaTime * speed);
+      transform.LookAt(Player.Instance.transform.position);
    }
 
    public void OverwriteCameraOffset(Vector3 cameraOffset)
